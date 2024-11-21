@@ -1,0 +1,30 @@
+/* src/componentes/Header.css */
+.header {
+    background-color: #4CAF50; /* Color verde */
+    color: white; /* Color del texto */
+    padding: 10px; /* Espaciado interno */
+    text-align: center; /* Centrar texto */
+  }
+
+  .logo{
+    text-align: left;
+  }
+  
+  .header nav ul {
+    list-style-type: none; /* Quitar viñetas de la lista */
+    padding: 0; /* Quitar padding */
+  }
+  
+  .header nav ul li {
+    display: inline; /* Mostrar elementos en línea */
+    margin: 0 15px; /* Espaciado entre elementos */
+  }
+  
+  .header nav ul li a {
+    color: white; /* Color de los enlaces */
+    text-decoration: none; /* Quitar subrayado */
+  }
+  
+  .header nav ul li a:hover {
+    text-decoration: underline; /* Subrayar al pasar el ratón */
+  }
