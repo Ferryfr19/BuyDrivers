@@ -1,30 +1,67 @@
 /* src/componentes/Header.css */
 .header {
-    background-color: #4CAF50; /* Color verde */
-    color: white; /* Color del texto */
-    padding: 10px; /* Espaciado interno */
-    text-align: center; /* Centrar texto */
-  }
+  display: flex;
+  background-color: #4CAF50; /* Color verde */
+  color: white; /* Color del texto */
+  padding: 5px; /* Espaciado interno */
+  display: flex;
+  justify-content: space-between; /* Espacio entre logo y nav */
+  align-items: center; /* Alinea verticalmente */
+}
 
-  .logo{
-    text-align: left;
-  }
-  
-  .header nav ul {
-    list-style-type: none; /* Quitar viñetas de la lista */
-    padding: 0; /* Quitar padding */
-  }
-  
-  .header nav ul li {
-    display: inline; /* Mostrar elementos en línea */
-    margin: 0 15px; /* Espaciado entre elementos */
-  }
-  
-  .header nav ul li a {
-    color: white; /* Color de los enlaces */
-    text-decoration: none; /* Quitar subrayado */
-  }
-  
-  .header nav ul li a:hover {
-    text-decoration: underline; /* Subrayar al pasar el ratón */
-  }
+.logo {
+  display: flex;
+  flex-direction: column; /* Apila logo y texto verticalmente */
+  align-items: flex-start; /* Alinea a la izquierda */
+  padding: 10px;
+}
+
+.logo-coche {
+  width: 50px; /* Ancho del logo */
+  height: 50px; /* Alto del logo */
+  margin-bottom: 5px; /* Espacio entre la imagen y el texto */
+}
+
+.logo-text {
+  font-size: 1.2em; /* Ajusta el tamaño del texto según necesites */
+}
+
+.header nav {
+  flex-grow: 1; /* Permite que el nav ocupe el espacio restante */
+  text-align: center; /* Centra el contenido dentro del nav */
+}
+
+.header nav ul {
+  list-style-type: none; /* Quitar viñetas de la lista */
+  padding: 0; /* Quitar padding */
+  display: inline-flex; /* Mostrar elementos en línea */
+}
+
+.header nav ul li {
+  margin: 0 15px; /* Espaciado entre elementos */
+}
+
+.header nav ul li a {
+  color: white; /* Color de los enlaces */
+  text-decoration: none; /* Quitar subrayado */
+}
+
+.header nav ul li a:hover {
+  text-decoration: underline; /* Subrayar al pasar el ratón */
+}
+
+.login{
+  margin-left: auto;
+  text-align: center;
+}
+
+.login img {
+  width: 24px; /* Ajusta el tamaño según sea necesario */
+  height: auto; /* Mantiene la proporción */
+}
+
+.login a {
+  display: block; /* Hace que el enlace ocupe todo el ancho disponible */
+  text-decoration: none;
+  color: blue; /* Elige el color que prefieras */
+}

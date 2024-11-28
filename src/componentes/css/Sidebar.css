@@ -1,0 +1,44 @@
+.sidebar {
+    height: calc(100% - 110px); /* Altura total menos la altura del header */
+    width: 250px; /* Ancho fijo del sidebar */
+    position: fixed; /* Fijo en la pantalla */
+    top: 110px; /* Alineado justo debajo del header */
+    left: 0; /* Alineado a la izquierda */
+    background-color: #534e4e; /* Color de fondo */
+    padding-top: 30px; /* Espacio superior para los enlaces */
+    z-index: 1000; /* Asegura que esté por encima del contenido */
+}
+
+.sidebar h2 {
+    color: white; /* Color del encabezado */
+    padding-left: 32px; /* Espaciado a la izquierda */
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px; /* Espaciado interno */
+    text-decoration: none; /* Sin subrayado */
+    font-size: 25px; /* Tamaño de fuente */
+    color: #818181; /* Color del texto */
+    display: block; /* Mostrar en bloque */
+}
+
+.sidebar a:hover {
+    color: #f1f1f1; /* Color al pasar el ratón */
+}
+
+.search-container{
+    position: center;
+    padding: 30px;
+}
+
+.dropdown{
+    height: 50px;
+    padding: 10px;
+}
+.dropdown form {
+    margin-bottom: 15px; /* Espacio entre formularios */
+  }
+  
+  .dropdown select {
+    margin-top: 20px; /* Espacio entre selects */
+  }
