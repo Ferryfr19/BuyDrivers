@@ -1,0 +1,83 @@
+/* Login.css */
+
+/* Centrar la página de login */
+.login-page {
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical */
+  flex-direction: column;  /* Alinea elementos en columna */
+  height: 100vh;           /* Ocupa el 100% de la altura de la ventana */
+  background-color: #f4f4f4; /* Fondo gris claro */
+}
+
+/* Título del formulario */
+h1 {
+  font-size: 28px;       /* Tamaño del texto */
+  margin-bottom: 20px;   /* Espacio debajo del título */
+  color: #333;           /* Color del texto */
+}
+
+/* Estilos del formulario */
+.login-form {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  width: 100%;
+  max-width: 400px; /* Maximo ancho para el formulario */
+}
+
+/* Estilo para los grupos de formulario */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Etiquetas de los campos */
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Estilos de los campos de entrada */
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño */
+}
+
+/* Estilo del botón */
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #45a049; /* Cambio de color al pasar el ratón */
+}
+
+/* Enlace de registro debajo del formulario */
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.register-link a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}

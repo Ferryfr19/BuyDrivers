@@ -1,21 +1,38 @@
 import React from 'react';
-import Header from './componentes/Header'; // Importa el Header
-import Sidebar from './componentes/Sidebar'; // Importa el Sidebar
-import Footer from './componentes/Footer'; // Importa el Footer
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import Header from './componentes/Header';
+import Sidebar from './componentes/Sidebar'; // Importa tu sidebar
+import Footer from './componentes/Footer';   // Importa tu footer
+import Inicio from './paginas/Inicio';
+import Login from './paginas/login';
+import GestionVentas from './paginas/GestionVentas';
+import VendedoresDestacados from './paginas/VendedoresDestacados';
 
-function App() {
+const App = () => {
+  const location = useLocation(); // Hook para obtener la ruta actual
+
   return (
-    <div className="App">
+    <>
       <Header />
-      <div className="main-content">
-        <Sidebar /> {/* Sidebar al lado del contenido */}
-        {/* Aquí puedes añadir el contenido principal */}
-        <div className="content"> {/* Placeholder para contenido principal */}
-        </div>
-      </div>
-      <Footer /> {/* Agrega el Footer aquí */}
-    </div>
+      {/* Muestra el Sidebar y Footer solo en la página de Inicio */}
+      {location.pathname === '/inicio' && <Sidebar />}
+      <main>
+        <Routes>
+          <Route path="/inicio" element={<Inicio />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/gestion-ventas" element={<GestionVentas />} />
+          <Route path="/vendedores-destacados" element={<VendedoresDestacados />} />
+        </Routes>
+      </main>
+      {location.pathname === '/inicio' && <Footer />}
+    </>
   );
-}
+};
 
-export default App;
+const AppWrapper = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default AppWrapper;

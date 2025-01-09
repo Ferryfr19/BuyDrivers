@@ -1,38 +1,31 @@
-.App {
-  text-align: center;
+/* Fijar el sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px; /* Ajusta según el ancho que desees para el sidebar */
+  background-color: #f4f4f4;
+  z-index: 1000; /* Asegura que el sidebar esté encima del contenido */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Fijar el footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
   color: white;
+  text-align: center;
+  padding: 10px;
+  z-index: 1000;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Contenido principal con scroll */
+.main-content {
+  margin-left: 250px; /* Deja espacio para el sidebar */
+  padding-bottom: 60px; /* Para que no quede tapado por el footer */
+  overflow-y: scroll; /* Permite desplazamiento vertical */
+  height: 100vh; /* Asegura que el contenido principal ocupe toda la altura */
 }
