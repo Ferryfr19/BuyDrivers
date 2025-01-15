@@ -81,3 +81,9 @@ h1 {
 .register-link a:hover {
   text-decoration: underline;
 }
+
+h2 {
+  font-size: 1.5em;
+  color: green;
+  text-align: center;
+}

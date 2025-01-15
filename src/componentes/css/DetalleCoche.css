@@ -1,0 +1,20 @@
+.detalle-coche-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .detalle-coche-imagen {
+    width: 300px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .detalle-coche-container ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .detalle-coche-container li {
+    margin-bottom: 10px;
+  }
+  

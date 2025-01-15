@@ -1,0 +1,53 @@
+/* Sidebar.css o en el CSS global */
+
+.sidebar-horizontal {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: transparent; /* Sin fondo */
+    overflow-x: auto; /* Permite que los elementos se deslicen horizontalmente */
+    white-space: nowrap;
+  }
+  
+  .sidebar-horizontal .search-container {
+    margin-right: 20px;
+  }
+  
+  .sidebar-horizontal .dropdown {
+    display: inline-block;
+    margin-right: 20px;
+  }
+  
+  .sidebar-horizontal select,
+  .sidebar-horizontal input[type="submit"] {
+    padding: 8px;
+    margin: 0 5px;
+    font-size: 14px;
+  }
+  
+  .sidebar-horizontal select {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .sidebar-horizontal input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .sidebar-horizontal input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  .coche-fondo{
+    padding: -50px;
+    width: 50%;
+    height: auto;
+    margin-left: 700px;
+    margin-top: -50px;
+  }
+  

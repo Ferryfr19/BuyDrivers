@@ -36,10 +36,11 @@ const Sidebar = () => {
 
     
   };
+  
   return (
     <div className="sidebar">
       <div className="search-container">
-        <input type="text" placeholder="Buscar..." className="search-input" />
+        <input type="text" placeholder="Buscar..." className="search-input" />  
       </div>
 
       <div className="dropdown">

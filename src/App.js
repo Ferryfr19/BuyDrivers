@@ -7,6 +7,8 @@ import Inicio from './paginas/Inicio';
 import Login from './paginas/login';
 import GestionVentas from './paginas/GestionVentas';
 import VendedoresDestacados from './paginas/VendedoresDestacados';
+import Registrar from './paginas/Registrar'; // Importa la nueva página de registro
+import DetalleCoche from './paginas/DetalleCoche';
 
 const App = () => {
   const location = useLocation(); // Hook para obtener la ruta actual
@@ -19,9 +21,11 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/inicio" element={<Inicio />} />
+          <Route path="/detalle-coche/:id" element={<DetalleCoche />} />
           <Route path="/login" element={<Login />} />
           <Route path="/gestion-ventas" element={<GestionVentas />} />
           <Route path="/vendedores-destacados" element={<VendedoresDestacados />} />
+          <Route path="/registrar" element={<Registrar />} /> {/* Ruta para registrarse */}
         </Routes>
       </main>
       {location.pathname === '/inicio' && <Footer />}
@@ -36,3 +40,4 @@ const AppWrapper = () => (
 );
 
 export default AppWrapper;
+
