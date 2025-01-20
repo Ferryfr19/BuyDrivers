@@ -11,6 +11,9 @@ import Registrar from './paginas/Registrar'; // Importa la nueva página de regi
 import DetalleCoche from './paginas/DetalleCoche';
 import appFirebase from './server/credenciales'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import PerfilUsuario from './paginas/PerfilUsuario'; 
+import SubirVehiculo from './paginas/SubirVehiculo';
+
 
 const auth = getAuth(appFirebase)
 
@@ -30,6 +33,8 @@ const App = () => {
           <Route path="/gestion-ventas" element={<GestionVentas />} />
           <Route path="/vendedores-destacados" element={<VendedoresDestacados />} />
           <Route path="/registrar" element={<Registrar />} /> {/* Ruta para registrarse */}
+          <Route path="/perfil-usuario" element={<PerfilUsuario />} />
+          <Route path="/subir-vehiculo" element={<SubirVehiculo />} />
         </Routes>
       </main>
       {location.pathname === '/inicio' && <Footer />}

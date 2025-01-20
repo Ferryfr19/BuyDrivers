@@ -65,3 +65,17 @@
   text-decoration: none;
   color: blue; /* Elige el color que prefieras */
 }
+
+.login span {
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.login span:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
+}

@@ -50,4 +50,33 @@
     margin-left: 700px;
     margin-top: -50px;
   }
-  
+
+  /* Estilos generales para los formularios */
+form {
+  margin-bottom: 20px; /* Espacio entre formularios */
+}
+
+/* Estilo para el campo de entrada del precio */
+input[type="number"] {
+  padding: 10px;
+  width: calc(60% - 22px); /* Ajuste para padding */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+/* Añade esto a tu CSS existente */
+/* Estilo para el contenedor de km y precio */
+.km-precio-container {
+  display: flex;
+  justify-content: space-between; /* Espacio entre los inputs */
+  align-items: center; /* Alineación vertical */
+}
+
+.km-precio-container input[type="number"] {
+  flex: 1; /* Distribuye el espacio equitativamente */
+  margin-right: 10px; /* Espacio a la derecha del primer input */
+}
+
+.km-precio-container input[type="submit"] {
+  flex-shrink: 0; /* Evita que el botón se encoja */
+}

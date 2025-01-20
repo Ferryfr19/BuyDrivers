@@ -1,10 +1,36 @@
-import React, { useState } from 'react';
-import './GestionVentas.css'; // Vincula el archivo CSS correspondiente
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../server/credenciales';
+import { collection, addDoc } from 'firebase/firestore';
+import './GestionVentas.css';
 import carImage from 'C:/Users/Ferran/React/buydrivers-app/src/componentes/imagenes/coche.jpg';
 
 const GestionVentas = () => {
   const [modelos, setModelos] = useState([]);
   const [marcaSeleccionada, setMarcaSeleccionada] = useState('');
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  // Estados para cada select
+  const [marca, setMarca] = useState('');
+  const [modelo, setModelo] = useState('');
+  const [año, setAño] = useState('');
+  const [etiquetaAmbiental, setEtiquetaAmbiental] = useState('');
+  const [carroceria, setCarroceria] = useState('');
+  const [combustible, setCombustible] = useState('');
+  const [cajaCambios, setCajaCambios] = useState('');
+  const [precio, setPrecio] = useState('');
+  const [color, setColor] = useState('');
+  const [estado, setEstado] = useState('');
+  const [kmRecorridos, setKmRecorridos] = useState(0);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const modelosPorMarca = {
     Renault: ["Clio", "Megane", "Captur"],
@@ -36,63 +62,103 @@ const GestionVentas = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (user) {
+      try {
+        const cocheData = {
+          Marca: marca,
+          Modelo: modelo,
+          Color: color,
+          Estado: estado,
+          Fecha_publicacion: new Date().getFullYear(),
+          PK_id_coche: 0,
+          Precio: parseInt(precio),
+          año_matriculacion: parseInt(año),
+          km: parseInt(kmRecorridos),
+          Combustible: combustible,
+          Caja_de_cambios: cajaCambios
+        };
+
+        const docRef = await addDoc(collection(db, 'Coches'), cocheData);
+
+        navigate('/subir-vehiculo', { 
+          state: { 
+            cocheId: docRef.id 
+          } 
+        });
+
+      } catch (error) {
+        console.error("Error al guardar el coche:", error);
+        alert(`Hubo un problema: ${error.message}`);
+      }
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <div>
       <div className="sidebar-horizontal">
-        <div className="search-container">
-        </div>
-
-        <form action="#">
-          <select name="marca" id="marca" onChange={handleMarcaChange}>
-            <option value="" disabled selected>Marca</option>
+        <form>
+          <select 
+            name="marca" 
+            value={marca}
+            onChange={(e) => {
+              setMarca(e.target.value);
+              handleMarcaChange(e);
+            }}
+          >
+            <option value="" disabled>Marca</option>
             {Object.keys(modelosPorMarca).map((marca) => (
               <option key={marca} value={marca}>{marca}</option>
             ))}
           </select>
 
-          <select name="modelo" id="modelo">
-            <option value="" disabled selected>Modelo</option>
+          <select 
+            name="modelo"
+            value={modelo}
+            onChange={(e) => setModelo(e.target.value)}
+          >
+            <option value="" disabled>Modelo</option>
             {modelos.map((modelo, index) => (
               <option key={index} value={modelo}>{modelo}</option>
             ))}
           </select>
-
-          <select name="anio" id="anio">
-            <option value="" disabled selected>Año</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            {/* Agregar más años según sea necesario */}
-          </select>
-
-          <input type="submit" value="Buscar" />
         </form>
 
-        <form action="#">
-          <select name="lenguajes" id="lang">
-            <option value="" disabled selected>Año</option>
-            <option value="1980">1980</option>
-            <option value="1981">1981</option>
-            <option value="1982">1982</option>
-            {/* Continúa los años aquí */}
+        <form>
+          <select 
+            value={año} 
+            onChange={(e) => setAño(e.target.value)}
+          >
+            <option value="" disabled>Año</option>
+            {Array.from({length: 2025 - 1980 + 1}, (_, index) => 1980 + index).map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
           </select>
-          <input type="submit" value="Buscar" />
         </form>
 
-        <form action="#">
-          <select name="lenguajes" id="lang">
-            <option value="" disabled selected>Etiqueta ambiental</option>
+        <form>
+          <select 
+            value={etiquetaAmbiental}
+            onChange={(e) => setEtiquetaAmbiental(e.target.value)}
+          >
+            <option value="" disabled>Etiqueta ambiental</option>
             <option value="0">0 emisiones</option>
             <option value="ECO">ECO</option>
             <option value="C">Etiqueta C</option>
             <option value="B">Etiqueta B</option>
           </select>
-          <input type="submit" value="Buscar" />
         </form>
 
-        <form action="#">
-          <select name="lenguajes" id="lang">
-            <option value="" disabled selected>Carrocería</option>
+        <form>
+          <select 
+            value={carroceria}
+            onChange={(e) => setCarroceria(e.target.value)}
+          >
+            <option value="" disabled>Carrocería</option>
             <option value="Limusina">Limusina</option>
             <option value="Pick-up">Pick-up</option>
             <option value="Sedán">Sedán</option>
@@ -101,50 +167,72 @@ const GestionVentas = () => {
             <option value="Todoterreno">Todoterreno</option>
             <option value="Descapotable">Descapotable</option>
           </select>
-          <input type="submit" value="Buscar" />
         </form>
 
-        <form action="#">
-          <select name="lenguajes" id="lang">
-            <option value="" disabled selected>Combustible</option>
+        <form>
+          <select 
+            value={combustible}
+            onChange={(e) => setCombustible(e.target.value)}
+          >
+            <option value="" disabled>Combustible</option>
             <option value="Gasolina">Gasolina</option>
             <option value="Diesel">Diesel</option>
             <option value="Electrico">Eléctrico</option>
             <option value="Hibrido">Híbrido</option>
           </select>
-          <input type="submit" value="Buscar" />
         </form>
 
-        <form action="#">
-          <select name="lenguajes" id="lang">
-            <option value="" disabled selected>Caja de cambios</option>
+        <form>
+          <select 
+            value={cajaCambios}
+            onChange={(e) => setCajaCambios(e.target.value)}
+          >
+            <option value="" disabled>Caja de cambios</option>
             <option value="Manual">Manual</option>
             <option value="Automatico">Automático</option>
             <option value="Semiautomatico">Semiautomático</option>
             <option value="CVT">CVT</option>
           </select>
-          <input type="submit" value="Buscar" />
         </form>
 
-        <form action="#">
-          <select name="lenguajes" id="lang">
-            <option value="" disabled selected>Precio</option>
-            <option value="100€-999€">100€-999€</option>
-            <option value="1000€-9.999€">1000€-9.999€</option>
-            <option value="10.000€-99.999€">10.000€-99.999€</option>
-            <option value="100.000€-1.000.000€">100.000€-1.000.000€</option>
-          </select>
-          <input type="submit" value="Buscar" />
-        </form>
+        {/* Contenedor para Kilómetros y Precio */}
+        <form onSubmit={handleSubmit}>
+          <div className="km-precio-container">
+              {/* Campo de Kilómetros */}
+              <input 
+                type="number" 
+                min="0"
+                placeholder="Kilómetros recorridos"
+                onChange={(e) => setKmRecorridos(e.target.value)}
+                required
+              />
+              {/* Campo de Precio */}
+              <input 
+                type="number" 
+                min="0"
+                placeholder="Ingrese el precio" 
+                required
+                onChange={(e) => setPrecio(e.target.value)} 
+              />
+              {/* Botón de Añadir */}
+              <input type="submit" value="Añadir" />
+           </div>  
+         </form>
       </div>
-      <div classname = "eltitulo">
-          <h1>RELLENA LOS CAMPOS</h1>
+
+      {/* Título */}
+      <div className="eltitulo">
+         <h1>RELLENA LOS CAMPOS</h1> 
       </div>
-      <div classname= "fondo">
-        <img src={carImage} alt="fondo coche" className="coche-fondo" />
+
+      {/* Imagen de fondo */}
+      <div className="fondo">
+         {/* Imagen del coche */}
+         <img src={carImage} alt="fondo coche" className="coche-fondo" />
       </div>
-    </div>
-  );
+
+   </div>  
+ );
 };
 
 export default GestionVentas;

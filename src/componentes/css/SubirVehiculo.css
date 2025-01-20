@@ -1,0 +1,46 @@
+/* Estilo general para el contenedor del componente */
+.subir-vehiculo-container {
+    max-width: 800px; /* Ancho máximo del contenedor */
+    margin: 20px auto; /* Centrar horizontalmente */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde alrededor del contenedor */
+    border-radius: 8px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Fondo claro */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+  
+  /* Título principal */
+  .subir-vehiculo-container h1 {
+    text-align: center; /* Centrar el texto */
+    color: #333; /* Color del texto */
+  }
+  
+  /* Título de detalles */
+  .subir-vehiculo-container h2 {
+    margin-top: 20px; /* Espacio superior */
+    color: #4CAF50; /* Color verde */
+  }
+  
+  /* Estilo para los párrafos que muestran los detalles del coche */
+  .subir-vehiculo-container p {
+    font-size: 16px; /* Tamaño de fuente */
+    color: #555; /* Color del texto */
+    margin: 10px 0; /* Espacio entre párrafos */
+  }
+  
+  /* Estilo para el botón de volver o realizar otra acción (si lo necesitas) */
+  .subir-vehiculo-container .back-button {
+    display: block;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #3498db; /* Color azul */
+    color: white; /* Color del texto en el botón */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .subir-vehiculo-container .back-button:hover {
+    background-color: #2980b9; /* Color más oscuro al pasar el ratón */
+  }
+  
