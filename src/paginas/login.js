@@ -1,36 +1,32 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Importa Link para la navegación
-import axios from 'axios'; // Importa axios para las solicitudes HTTP
-import './Login.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../server/credenciales';
+import './Login.css'; // Asegúrate de que este archivo CSS exista
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState(''); // Estado para el mensaje de inicio de sesión
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // Para redirigir después del inicio de sesión
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/login', {
-        email,
-        contraseña: password, // Asegúrate de que el nombre del campo coincida con el del servidor
-      });
-
-      if (response.data.message === 'Inicio de sesión exitoso') {
-        setMessage('¡Has iniciado sesión!'); // Actualiza el mensaje
-      } else {
-        setMessage('Error en el inicio de sesión'); // Manejo de errores
-      }
+      // Intentar iniciar sesión con Firebase Authentication
+      await signInWithEmailAndPassword(auth, email, password);
+      setMessage('¡Has iniciado sesión!');
+      navigate('/dashboard'); // Redirigir al dashboard después del inicio de sesión exitoso
     } catch (error) {
-      console.error('Error al iniciar sesión', error);
-      setMessage('Error en el inicio de sesión'); // Manejo de errores
+      console.error('Error al iniciar sesión:', error);
+      setMessage('Error en el inicio de sesión'); // Mensaje genérico en caso de error
     }
   };
 
   return (
     <div className="login-page">
       <h1>Iniciar Sesión</h1>
-      {message && <h2>{message}</h2>} {/* Muestra el mensaje si existe */}
+      {message && <h2 className="error-message">{message}</h2>} {/* Muestra el mensaje si existe */}
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
           <label htmlFor="email">Correo Electrónico:</label>
@@ -55,7 +51,6 @@ const Login = () => {
         <button type="submit" className="login-button">Iniciar Sesión</button>
       </form>
       <div className="register-link">
-        {/* Enlace a la página de registro */}
         <p>
           ¿No tienes una cuenta?{' '}
           <Link to="/registrar" className="register-link-text">

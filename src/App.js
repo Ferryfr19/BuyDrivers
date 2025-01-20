@@ -9,6 +9,10 @@ import GestionVentas from './paginas/GestionVentas';
 import VendedoresDestacados from './paginas/VendedoresDestacados';
 import Registrar from './paginas/Registrar'; // Importa la nueva página de registro
 import DetalleCoche from './paginas/DetalleCoche';
+import appFirebase from './server/credenciales'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
+const auth = getAuth(appFirebase)
 
 const App = () => {
   const location = useLocation(); // Hook para obtener la ruta actual
