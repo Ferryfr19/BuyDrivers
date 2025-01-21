@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../server/credenciales';
-import { signOut } from 'firebase/auth';  // Añadir importación de signOut
+import { signOut } from 'firebase/auth';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import 'C:/Users/Ferran/React/buydrivers-app/src/componentes/css/PerfilUsuario.css'
@@ -8,6 +8,7 @@ import 'C:/Users/Ferran/React/buydrivers-app/src/componentes/css/PerfilUsuario.c
 const PerfilUsuario = () => {
   const [userData, setUserData] = useState(null);
   const [historialVentas, setHistorialVentas] = useState([]);
+  const [ventasSubidas, setVentasSubidas] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -31,11 +32,22 @@ const PerfilUsuario = () => {
             ...doc.data()
           }));
 
+          // Obtener ventas subidas (de la colección CochesInicio)
+          const ventasSubidasQuery = query(
+            collection(db, 'CochesInicio'),
+            where('userId', '==', user.uid)
+          );
+          const ventasSubidasSnapshot = await getDocs(ventasSubidasQuery);
+          const ventasSubidas = ventasSubidasSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+
           setUserData(userDocSnap.data());
           setHistorialVentas(ventas);
+          setVentasSubidas(ventasSubidas);
           setLoading(false);
         } else {
-          // Si no hay usuario autenticado, redirigir al login
           navigate('/login');
         }
       } catch (error) {
@@ -47,7 +59,6 @@ const PerfilUsuario = () => {
     fetchUserData();
   }, [navigate]);
 
-  // Función para cerrar sesión
   const handleCerrarSesion = async () => {
     try {
       await signOut(auth);
@@ -108,18 +119,47 @@ const PerfilUsuario = () => {
         )}
       </section>
 
+      {/* Ventas Subidas */}
+      <section className="ventas-subidas">
+        <h2>Mis Ventas Activas</h2>
+        {ventasSubidas.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Precio</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ventasSubidas.map(venta => (
+                <tr key={venta.id}>
+                  <td>{venta.marca}</td>
+                  <td>{venta.modelo}</td>
+                  <td>{venta.precio}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No tienes ventas activas</p>
+        )}
+      </section>
+
       {/* Estadísticas Básicas */}
       <section className="estadisticas">
         <h2>Mis Estadísticas</h2>
         <div>
-          <p>Total Ventas: {historialVentas.length}</p>
-          <p>Valor Total: {historialVentas.reduce((total, venta) => total + venta.precio, 0)}€</p>
+          <p>Total Ventas Históricas: {historialVentas.length}</p>
+          <p>Ventas Activas: {ventasSubidas.length}</p>
+          <p>Valor Total Histórico: {historialVentas.reduce((total, venta) => total + parseFloat(venta.precio), 0).toFixed(2)}€</p>
         </div>
       </section>
 
       {/* Botón para cerrar sesión */}
       <button 
         onClick={handleCerrarSesion}
+        className="btn-cerrar-sesion"
         style={{
           marginTop: '20px',
           padding: '10px 20px',
@@ -137,3 +177,4 @@ const PerfilUsuario = () => {
 };
 
 export default PerfilUsuario;
+

@@ -44,3 +44,54 @@
     background-color: #2980b9; /* Color más oscuro al pasar el ratón */
   }
   
+  /* Estilos adicionales para subir imágenes */
+.subir-imagenes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .subir-imagenes input[type="file"] {
+    flex-grow: 1;
+    margin-right: 15px;
+  }
+  
+  .btn-subir {
+    padding: 10px 20px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-subir:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .btn-subir:hover:not(:disabled) {
+    background-color: #1976D2;
+  }
+  
+  .preview-imagenes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .imagen-preview {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
