@@ -1,20 +1,52 @@
 .detalle-coche-container {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .detalle-coche-imagen {
-    width: 300px;
-    height: auto;
-    margin-bottom: 20px;
-  }
-  
-  .detalle-coche-container ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .detalle-coche-container li {
-    margin-bottom: 10px;
-  }
-  
+  padding: 20px;
+  text-align: center;
+}
+
+.detalle-coche-imagen {
+  width: 300px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.detalle-coche-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.detalle-coche-container li {
+  margin-bottom: 10px;
+}
+
+/* Nuevos estilos para la valoración */
+.valoracion-comprador {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.valoracion-comprador h3 {
+  margin-bottom: 10px;
+}
+
+.react-stars {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-eliminar {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #ff3333;
+}

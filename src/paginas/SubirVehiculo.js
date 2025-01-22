@@ -49,8 +49,19 @@ const SubirVehiculo = () => {
         precio: `${cocheData.Precio}€`,
         imagen: cocheData.imagenes && cocheData.imagenes.length > 0 
           ? cocheData.imagenes[0] 
-          : 'C:/Users/Ferran/React/buydrivers-app/src/componentes/imagenes/Toyota.jpg',
-        userId: auth.currentUser.uid // Añadimos el userId del usuario actual
+          : 'URL_de_imagen_por_defecto',
+        userId: auth.currentUser.uid,
+        descripcion: cocheData.Descripcion || 'Descripción no disponible',
+        especificaciones: {
+          motor: cocheData.Motor || 'No especificado',
+          potencia: cocheData.Potencia || 'No especificada',
+          año: cocheData.año_matriculacion,
+          kilometraje: `${cocheData.km} km`,
+          combustible: cocheData.Combustible,
+          cajaDeCAmbios: cocheData.Caja_de_cambios,
+          color: cocheData.Color,
+          estado: cocheData.Estado
+        }
       };
 
       await addDoc(collection(db, 'CochesInicio'), cocheParaInicio);
@@ -93,5 +104,6 @@ const SubirVehiculo = () => {
 };
 
 export default SubirVehiculo;
+
 
 

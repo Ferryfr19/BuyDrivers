@@ -27,10 +27,12 @@ const Registro = () => {
         nombre,
         apellidos,
         email,
+        contraseña: password, // Nota: no es recomendable guardar contraseñas en texto plano
+        fecha_registro: new Date().getFullYear(),
+        userId: user.uid,
         telefono,
         dni,
-        fechaNacimiento: `${anioNacimiento}-${mesNacimiento}-${diaNacimiento}`,
-        uid: user.uid
+        fechaNacimiento: `${anioNacimiento}-${mesNacimiento}-${diaNacimiento}`
       });
 
       console.log('Usuario registrado con éxito');
@@ -150,6 +152,7 @@ const Registro = () => {
 };
 
 export default Registro;
+
 
 
 

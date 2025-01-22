@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { doc, getDoc, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from '../server/credenciales';
+import ReactStars from 'react-stars';
 import 'C:/Users/Ferran/React/buydrivers-app/src/componentes/css/DetalleCoche.css';
 import ImageToyota from 'C:/Users/Ferran/React/buydrivers-app/src/componentes/imagenes/toyota.jpg'
 
@@ -9,6 +10,7 @@ const DetalleCoche = () => {
   const { id } = useParams();
   const [coche, setCoche] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
+  const [rating, setRating] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +34,7 @@ const DetalleCoche = () => {
           const cocheData = { id: docSnap.id, ...docSnap.data() };
           console.log("Datos del coche:", cocheData);
           setCoche(cocheData);
+          setRating(cocheData.valoracionComprador || 0);
           const currentUserUid = auth.currentUser ? auth.currentUser.uid : null;
           console.log("Usuario actual UID:", currentUserUid);
           console.log("Coche userId:", cocheData.userId);
@@ -76,6 +79,20 @@ const DetalleCoche = () => {
     }
   };
 
+  const handleRating = async (newRating) => {
+    setRating(newRating);
+    try {
+      const docRef = doc(db, 'CochesInicio', id);
+      await updateDoc(docRef, {
+        valoracionComprador: newRating
+      });
+      alert('Valoración guardada con éxito');
+    } catch (error) {
+      console.error("Error al guardar la valoración:", error);
+      alert('Error al guardar la valoración');
+    }
+  };
+
   if (!coche) {
     return <div>Cargando...</div>;
   }
@@ -84,16 +101,27 @@ const DetalleCoche = () => {
     <div className="detalle-coche-container">
       <h1>{coche.marca} {coche.modelo}</h1>
       <img src={coche.imagen} alt={`${coche.marca} ${coche.modelo}`} className="detalle-coche-imagen" />
-      <p>{coche.descripcion}</p>
       <h3>Especificaciones:</h3>
       <ul>
-        <li>Motor: {coche.especificaciones?.motor}</li>
-        <li>Potencia: {coche.especificaciones?.potencia}</li>
         <li>Año: {coche.especificaciones?.año}</li>
         <li>Kilometraje: {coche.especificaciones?.kilometraje}</li>
-        <li>Vendedor: {coche.especificaciones?.vendedor}</li>
+        <li>Combustible: {coche.especificaciones?.combustible}</li>
+        <li>Caja de Cambios: {coche.especificaciones?.cajaDeCAmbios}</li>
+        <li>Etiqueta Medioambiental: {coche.etiquetaMedioambiental}</li>
+        <li>Tipo de Carrocería: {coche.tipoCarroceria}</li>
       </ul>
       <p><strong>Precio: {coche.precio}</strong></p>
+      
+      <div className="valoracion-comprador">
+        <h3>Valorar al comprador:</h3>
+        <ReactStars
+          count={5}
+          onChange={handleRating}
+          size={24}
+          color2={'#ffd700'}
+          value={rating}
+        />
+      </div>
       
       {isOwner && (
         <button onClick={handleDelete} className="btn-eliminar">
@@ -105,4 +133,3 @@ const DetalleCoche = () => {
 };
 
 export default DetalleCoche;
-
