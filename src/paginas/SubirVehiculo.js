@@ -60,7 +60,9 @@ const SubirVehiculo = () => {
           combustible: cocheData.Combustible,
           cajaDeCAmbios: cocheData.Caja_de_cambios,
           color: cocheData.Color,
-          estado: cocheData.Estado
+          estado: cocheData.Estado,
+          etiquetaAmbiental: cocheData.etiquetaAmbiental ?? 'No especificada',
+          carroceria: cocheData.carroceria ?? 'No especificada'
         }
       };
 
@@ -85,13 +87,13 @@ const SubirVehiculo = () => {
         <h2>Detalles del Coche</h2>
         <p><span>Marca:</span> <span>{cocheData.Marca}</span></p>
         <p><span>Modelo:</span> <span>{cocheData.Modelo}</span></p>
-        <p><span>Color:</span> <span>{cocheData.Color}</span></p>
-        <p><span>Estado:</span> <span>{cocheData.Estado}</span></p>
         <p><span>Año de Matriculación:</span> <span>{cocheData.año_matriculacion}</span></p>
         <p><span>Kilómetros:</span> <span>{cocheData.km}</span></p>
         <p><span>Precio:</span> <span>{cocheData.Precio}€</span></p>
         <p><span>Combustible:</span> <span>{cocheData.Combustible}</span></p>
         <p><span>Caja de Cambios:</span> <span>{cocheData.Caja_de_cambios}</span></p>
+        <p><span>Etiqueta Ambiental:</span> <span>{cocheData.etiquetaAmbiental || 'No especificada'}</span></p>
+        <p><span>Carrocería:</span> <span>{cocheData.carroceria || 'No especificada'}</span></p>
       </div>
       <button onClick={subirAInicio} className="btn-subir-inicio">
         Subir a Inicio
@@ -104,6 +106,8 @@ const SubirVehiculo = () => {
 };
 
 export default SubirVehiculo;
+
+
 
 
 

@@ -4,9 +4,13 @@
   background-color: #4CAF50; /* Color verde */
   color: white; /* Color del texto */
   padding: 5px; /* Espaciado interno */
-  display: flex;
   justify-content: space-between; /* Espacio entre logo y nav */
   align-items: center; /* Alinea verticalmente */
+  position: fixed; /* Hace que el header se quede fijo */
+  top: 0; /* Se alinea al principio de la página */
+  left: 0; /* Se alinea al lado izquierdo */
+  width: 100%; /* Asegura que ocupe todo el ancho */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
 }
 
 .logo {
@@ -78,4 +82,9 @@
 .login span:hover {
   background-color: #f0f0f0;
   color: #007bff;
+}
+
+/* Añadir un margen superior para que no se solape con el contenido de la página */
+body {
+  padding-top: 60px; /* Ajusta este valor según la altura de tu header */
 }

@@ -1,44 +1,122 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+
 .sidebar {
-    height: calc(100% - 110px); /* Altura total menos la altura del header */
-    width: 250px; /* Ancho fijo del sidebar */
-    position: fixed; /* Fijo en la pantalla */
-    top: 110px; /* Alineado justo debajo del header */
-    left: 0; /* Alineado a la izquierda */
-    background-color: #534e4e; /* Color de fondo */
-    padding-top: 30px; /* Espacio superior para los enlaces */
-    z-index: 1000; /* Asegura que esté por encima del contenido */
+    position: fixed;
+    top: 110px;
+    left: 0;
+    height: calc(100vh - 110px);
+    width: 280px;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    padding-top: 20px;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    border-right: 2px solid #2980b9;
+    transition: all 0.3s ease;
+    z-index: 1002; /* Asegura que esté por encima del footer */
+}
+
+.sidebar:hover {
+    box-shadow: 10px 0 25px rgba(0,0,0,0.3);
 }
 
 .sidebar h2 {
-    color: white; /* Color del encabezado */
-    padding-left: 32px; /* Espaciado a la izquierda */
+    color: #ecf0f1;
+    padding: 15px 25px;
+    margin: 0;
+    font-size: 24px;
+    border-bottom: 2px solid #2980b9;
+    background: rgba(41, 128, 185, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar h2 i {
+    margin-right: 15px;
+    color: #3498db;
 }
 
 .sidebar a {
-    padding: 8px 8px 8px 32px; /* Espaciado interno */
-    text-decoration: none; /* Sin subrayado */
-    font-size: 25px; /* Tamaño de fuente */
-    color: #818181; /* Color del texto */
-    display: block; /* Mostrar en bloque */
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #bdc3c7;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
 }
 
 .sidebar a:hover {
-    color: #f1f1f1; /* Color al pasar el ratón */
+    color: #ecf0f1;
+    background-color: rgba(52, 73, 94, 0.5);
+    border-left-color: #3498db;
+    padding-left: 30px;
 }
 
-.search-container{
-    position: center;
-    padding: 30px;
+.sidebar a i {
+    margin-right: 15px;
+    color: #3498db;
+    transition: transform 0.3s ease;
 }
 
-.dropdown{
-    height: 50px;
-    padding: 10px;
+.sidebar a:hover i {
+    transform: scale(1.2);
 }
+
+.search-container {
+    padding: 20px;
+    background: rgba(52, 73, 94, 0.2);
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.dropdown {
+    padding: 15px;
+}
+
 .dropdown form {
-    margin-bottom: 15px; /* Espacio entre formularios */
-  }
-  
-  .dropdown select {
-    margin-top: 20px; /* Espacio entre selects */
-  }
+    margin-bottom: 15px;
+}
+
+.dropdown select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    background-color: #34495e;
+    color: #ecf0f1;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.dropdown select:hover, 
+.dropdown select:focus {
+    background-color: #2c3e50;
+    outline: none;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+}
+
+/* Scrollbar personalizada */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #34495e;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #3498db;
+    border-radius: 4px;
+}

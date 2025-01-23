@@ -45,10 +45,17 @@ const VendedoresDestacados = () => {
         const vendedoresConInfo = await Promise.all(vendedoresArray.map(async (vendedor) => {
           const userDoc = await getDoc(doc(db, 'usuarios', vendedor.id));
           const userData = userDoc.data();
+
+          console.log('User Data:', userData); // Verificar qué datos devuelve Firebase
+
+          // Verificación para asegurar que el apellido y nombre estén disponibles
+          const nombre = userData?.nombre || 'Nombre no disponible';
+          const apellido = userData?.apellido 
+          
           return {
             ...vendedor,
-            nombre: userData?.nombre || 'Nombre no disponible',
-            apellido: userData?.apellido || 'Apellido no disponible'
+            nombre,
+            apellido
           };
         }));
 

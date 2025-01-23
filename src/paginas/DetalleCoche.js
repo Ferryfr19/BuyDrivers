@@ -4,13 +4,14 @@ import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from '../server/credenciales';
 import ReactStars from 'react-stars';
 import 'C:/Users/Ferran/React/buydrivers-app/src/componentes/css/DetalleCoche.css';
-import ImageToyota from 'C:/Users/Ferran/React/buydrivers-app/src/componentes/imagenes/toyota.jpg'
+import ImageToyota from 'C:/Users/Ferran/React/buydrivers-app/src/componentes/imagenes/toyota.jpg';
 
 const DetalleCoche = () => {
   const { id } = useParams();
   const [coche, setCoche] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
   const [rating, setRating] = useState(0);
+  const [vendedor, setVendedor] = useState({ nombre: '', telefono: '' }); // Estado para almacenar los datos del vendedor
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +36,17 @@ const DetalleCoche = () => {
           console.log("Datos del coche:", cocheData);
           setCoche(cocheData);
           setRating(cocheData.valoracionComprador || 0);
+          
+          // Obtener datos del vendedor
+          const vendedorDocRef = doc(db, 'usuarios', cocheData.userId); // Usamos userId del coche para obtener los datos del vendedor
+          const vendedorDocSnap = await getDoc(vendedorDocRef);
+          if (vendedorDocSnap.exists()) {
+            setVendedor({
+              nombre: vendedorDocSnap.data().nombre,
+              telefono: vendedorDocSnap.data().telefono
+            });
+          }
+
           const currentUserUid = auth.currentUser ? auth.currentUser.uid : null;
           console.log("Usuario actual UID:", currentUserUid);
           console.log("Coche userId:", cocheData.userId);
@@ -54,8 +66,12 @@ const DetalleCoche = () => {
               potencia: '122 CV',
               año: 2023,
               kilometraje: '0 km',
-              vendedor: 'Alfonso Guerra'
+              vendedor: 'Alfonso Guerra',
+              combustible: 'Híbrido',
+              cajaDeCAmbios: 'Automática'
             },
+            etiquetaMedioambiental: 'ECO',
+            tipoCarroceria: 'Sedán'
           });
         }
       } catch (error) {
@@ -107,10 +123,16 @@ const DetalleCoche = () => {
         <li>Kilometraje: {coche.especificaciones?.kilometraje}</li>
         <li>Combustible: {coche.especificaciones?.combustible}</li>
         <li>Caja de Cambios: {coche.especificaciones?.cajaDeCAmbios}</li>
-        <li>Etiqueta Medioambiental: {coche.etiquetaMedioambiental}</li>
-        <li>Tipo de Carrocería: {coche.tipoCarroceria}</li>
+        <li>Etiqueta Medioambiental: {coche.especificaciones?.etiquetaAmbiental}</li>
+        <li>Tipo de Carrocería: {coche.especificaciones?.carroceria}</li>
       </ul>
       <p><strong>Precio: {coche.precio}</strong></p>
+      
+      <div className="informacion-vendedor">
+        <h3>Datos del Vendedor:</h3>
+        <p><strong>Nombre:</strong> {vendedor.nombre}</p>
+        <p><strong>Teléfono:</strong> {vendedor.telefono}</p>
+      </div>
       
       <div className="valoracion-comprador">
         <h3>Valorar al comprador:</h3>

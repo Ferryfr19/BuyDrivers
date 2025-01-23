@@ -24,10 +24,15 @@ const App = () => {
     <>
       <Header />
       {/* Muestra el Sidebar y Footer solo en la página de Inicio */}
-      {location.pathname === '/inicio' && <Sidebar />}
+      
       <main>
-        <Routes>
-          <Route path="/inicio" element={<Inicio />} />
+
+          <div className="content-wrapper">
+            <Routes>
+              <Route 
+                path="/inicio" 
+                element={<Inicio key={location.key} />}
+              />
           <Route path="/detalle-coche/:id" element={<DetalleCoche />} />
           <Route path="/login" element={<Login />} />
           <Route path="/gestion-ventas" element={<GestionVentas />} />
@@ -36,6 +41,7 @@ const App = () => {
           <Route path="/perfil-usuario" element={<PerfilUsuario />} />
           <Route path="/subir-vehiculo" element={<SubirVehiculo />} />
         </Routes>
+        </div>
       </main>
       {location.pathname === '/inicio' && <Footer />}
     </>

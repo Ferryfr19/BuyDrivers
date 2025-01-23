@@ -64,7 +64,7 @@ const GestionVentas = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (user) {
       try {
         const cocheData = {
@@ -78,7 +78,9 @@ const GestionVentas = () => {
           año_matriculacion: parseInt(año),
           km: parseInt(kmRecorridos),
           Combustible: combustible,
-          Caja_de_cambios: cajaCambios
+          Caja_de_cambios: cajaCambios,
+          etiquetaAmbiental: etiquetaAmbiental,  // Añadido
+          carroceria: carroceria               // Añadido
         };
 
         const docRef = await addDoc(collection(db, 'Coches'), cocheData);
@@ -236,4 +238,3 @@ const GestionVentas = () => {
 };
 
 export default GestionVentas;
-

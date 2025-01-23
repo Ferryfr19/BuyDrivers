@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import 'C:/Users/Ferran/React/buydrivers-app/src/componentes/css/Sidebar.css'; 
 
-const Sidebar = () => {
-  const[modelos, setModelos] = useState([]);
-  const[marcaSeleccionada, setMarcaSeleccionada] = useState('');
+const Sidebar = ({ onSearch }) => {
+  const [modelos, setModelos] = useState([]);
+  const [searchParams, setSearchParams] = useState({
+    marca: '',
+    modelo: '',
+    año: '',
+    etiquetaAmbiental: '',
+    carroceria: '',
+    combustible: '',
+    cajaCambios: '',
+    precio: ''
+  });
 
+  // Mapeo de los modelos por marca
   const modelosPorMarca = {
     Renault: ["Clio", "Megane", "Captur"],
     Nissan: ["Micra", "Qashqai", "X-Trail"],
@@ -24,18 +34,36 @@ const Sidebar = () => {
     Kia: ["Rio", "Ceed", "Sportage"]
   };
   
+  // Función para manejar cambios en el selector de marca
   const handleMarcaChange = (event) => {
     const marca = event.target.value;
-    setMarcaSeleccionada(marca);
-
-    if(marca){
-      setModelos(modelosPorMarca[marca]);
-    } else{
-      setModelos([]);
-    }
-
-    
+    setModelos(marca ? modelosPorMarca[marca] : []);
+    setSearchParams({ ...searchParams, marca: marca, modelo: '' });
   };
+
+  // Función para manejar cambios en los campos de búsqueda
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setSearchParams({ ...searchParams, [name]: value });
+  };
+
+  // Función de búsqueda cuando se envía el formulario
+  const handleSearch = (event) => {
+    event.preventDefault();
+  
+    const filteredParams = Object.fromEntries(
+      Object.entries(searchParams).filter(([_, value]) => value !== '')
+    );
+  
+    console.log("Parámetros enviados desde Sidebar:", filteredParams);
+  
+    if (typeof onSearch === 'function') {
+      onSearch(filteredParams); // Llama a la función pasada desde `Inicio.js`
+    } else {
+      console.error('onSearch no es una función');
+    }
+  };
+  
   
   return (
     <div className="sidebar">
@@ -44,133 +72,88 @@ const Sidebar = () => {
       </div>
 
       <div className="dropdown">
-        <form action="#">
-          <select name="marca" id="marca" onChange={handleMarcaChange}>
-            <option value="" disabled selected>Marca</option> 
+        <form onSubmit={handleSearch}>
+          {/* Selector de Marca */}
+          <select name="marca" id="marca" value={searchParams.marca} onChange={handleMarcaChange}>
+            <option value="">Marca</option> 
             {Object.keys(modelosPorMarca).map((marca) => (
               <option key={marca} value={marca}>{marca}</option>
             ))}
           </select>
 
-          <label htmlFor="modelo"></label>
-          <select name="modelo" id="modelo">
-            <option value="" disabled selected>Modelo</option>
+          {/* Selector de Modelo */}
+          <select name="modelo" id="modelo" value={searchParams.modelo} onChange={handleInputChange}>
+            <option value="">Modelo</option>
             {modelos.map((modelo, index) => (
               <option key={index} value={modelo}>{modelo}</option>
             ))}
           </select>
-          <input type="submit" value="Buscar" />
-        </form>
-      <form action="#">
-      <select name="lenguajes" id="lang">
-        <option value="" disabled selected>Año</option>
-        <option value="1980">1980</option>
-        <option value="1981">1981</option>
-        <option value="1982">1982</option>
-        <option value="1983">1983</option>
-        <option value="1984">1984</option>
-        <option value="1985">1985</option>
-        <option value="1986">1986</option>
-        <option value="1987">1987</option>
-        <option value="1988">1988</option>
-        <option value="1989">1989</option>
-        <option value="1990">1990</option>
-        <option value="1991">1991</option>
-        <option value="1992">1992</option>
-        <option value="1993">1993</option>
-        <option value="1994">1994</option>
-        <option value="1995">1995</option>
-        <option value="1996">1996</option>
-        <option value="1997">1997</option>
-        <option value="1998">1998</option>
-        <option value="1999">1999</option>
-        <option value="2000">2000</option>
-        <option value="2001">2001</option>
-        <option value="2002">2002</option>
-        <option value="2003">2003</option>
-        <option value="2004">2004</option>
-        <option value="2005">2005</option>
-        <option value="2006">2006</option>
-        <option value="2007">2007</option>
-        <option value="2008">2008</option>
-        <option value="2009">2009</option>
-        <option value="2010">2010</option>
-        <option value="2011">2011</option>
-        <option value="2012">2012</option>
-        <option value="2013">2013</option>
-        <option value="2014">2014</option>
-        <option value="2015">2015</option>
-        <option value="2016">2016</option>
-        <option value="2017">2017</option>
-        <option value="2018">2018</option>
-        <option value="2019">2019</option>
-        <option value="2020">2020</option>
-        <option value="2021">2021</option>
-        <option value="2022">2022</option>
-        <option value="2023">2023</option>
-        <option value="2024">2024</option>
-        </select>
-        <input type="submit" value="Buscar" />
-      </form>
-      <form action="#">
-        <select name="lenguages" id="lang">
-          <option value="" disabeled selected>Etiqueta ambiental</option>
-          <option value="0">0 emisiones</option>
-          <option value="ECO">ECO</option>
-          <option value="C">Etiqueta C</option>
-          <option value="B">Etiqueta B</option>
-        </select>
-        <input type="submit" value="Buscar" />
-      </form>
-      <form action="#">
-      <select name="lenguajes" id="lang">
-          <option value="" disabled selected>Carroceria</option> 
-          <option value="Limusina">Limusina</option>
-          <option value="Pick-up">Pick-up</option>
-          <option value="Sedán">Sedán</option>
-          <option value="Compacto">Compacto</option>
-          <option value="Coupé">Coupé</option>
-          <option value="Todoterreno">Todoterreno</option>
-          <option value="Descapotable">Descapotable</option>
-         </select>
-         <input type="submit" value="Buscar" />
-      </form>
-      <form action="#">
-      <select name="lenguajes" id="lang">
-          <option value="" disabled selected>Combustible</option> 
-          <option value="Gasolina">Gasolina</option>
-          <option value="Diesel">Diesel</option>
-          <option value="Electrico">Electrico</option>
-          <option value="Hibrido">Hibrido</option>
-         </select>
-         <input type="submit" value="Buscar" />
-      </form>
-      <form action="#">
-      <select name="lenguajes" id="lang">
-          <option value="" disabled selected>Caja de cambios</option> 
-          <option value="Manual">Manual</option>
-          <option value="Automatico">Automatico</option>
-          <option value="Semiautomatico">Semiautomatico</option>
-          <option value="CVT">CVT</option>
-         </select>
-         <input type="submit" value="Buscar" />
-      </form>
-      <form action="#">
-      <select name="lenguajes" id="lang">
-          <option value="" disabled selected>Precio</option> 
-          <option value="100€-999€">100€-999€</option>
-          <option value="1000€-9.999€">1000€-9.999€</option>
-          <option value="10.000€-99.999€">10.000€-99.999€</option>
-          <option value="10.000€-99.999€">10.000€-99.999€</option>
-          <option value="100.000€-1.000.000€">100.000€-1.000.000€</option>
-         </select>
-         <input type="submit" value="Buscar" />
-      </form>
-      
-    </div>
 
+          {/* Selector de Año */}
+          <select name="año" id="año" value={searchParams.año} onChange={handleInputChange}>
+            <option value="">Año</option>
+            {Array.from({length: 45}, (_, i) => 1980 + i).map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+
+          {/* Selector de Etiqueta Ambiental */}
+          <select name="etiquetaAmbiental" id="etiquetaAmbiental" value={searchParams.etiquetaAmbiental} onChange={handleInputChange}>
+            <option value="">Etiqueta ambiental</option>
+            <option value="0">0 emisiones</option>
+            <option value="ECO">ECO</option>
+            <option value="C">Etiqueta C</option>
+            <option value="B">Etiqueta B</option>
+          </select>
+
+          {/* Selector de Carrocería */}
+          <select name="carroceria" id="carroceria" value={searchParams.carroceria} onChange={handleInputChange}>
+            <option value="">Carrocería</option>
+            <option value="Limusina">Limusina</option>
+            <option value="Pick-up">Pick-up</option>
+            <option value="Sedán">Sedán</option>
+            <option value="Compacto">Compacto</option>
+            <option value="Coupé">Coupé</option>
+            <option value="Todoterreno">Todoterreno</option>
+            <option value="Descapotable">Descapotable</option>
+          </select>
+
+          {/* Selector de Combustible */}
+          <select name="combustible" id="combustible" value={searchParams.combustible} onChange={handleInputChange}>
+            <option value="">Combustible</option>
+            <option value="Gasolina">Gasolina</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electrico">Eléctrico</option>
+            <option value="Hibrido">Híbrido</option>
+          </select>
+
+          {/* Selector de Caja de Cambios */}
+          <select name="cajaCambios" id="cajaCambios" value={searchParams.cajaCambios} onChange={handleInputChange}>
+            <option value="">Caja de cambios</option>
+            <option value="Manual">Manual</option>
+            <option value="Automatico">Automático</option>
+            <option value="Semiautomatico">Semiautomático</option>
+            <option value="CVT">CVT</option>
+          </select>
+
+          {/* Selector de Rango de Precio */}
+          <select name="precio" id="precio" value={searchParams.precio} onChange={handleInputChange}>
+            <option value="">Precio</option>
+            <option value="100-999">100€-999€</option>
+            <option value="1000-9999">1000€-9.999€</option>
+            <option value="10000-99999">10.000€-99.999€</option>
+            <option value="100000-1000000">100.000€-1.000.000€</option>
+          </select>
+
+          {/* Botón de búsqueda */}
+          <input type="submit" value="Buscar" />
+          
+        </form>
+      </div>
     </div>
   );
 };
 
 export default Sidebar;
+
+
